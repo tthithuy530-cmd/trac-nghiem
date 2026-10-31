@@ -24,11 +24,13 @@ jobs:
       - name: Check out source
         uses: actions/checkout@v4
       - name: Check JavaScript
-        run: node --check script.js
+        run: |
+          node --check script.js
+          node --check languages.js
       - name: Prepare website
         run: |
           mkdir -p _site
-          cp index.html style.css script.js qr-code.svg qr-code.png _site/
+          cp index.html style.css script.js languages.js qr-code.svg qr-code.png _site/
           touch _site/.nojekyll
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
