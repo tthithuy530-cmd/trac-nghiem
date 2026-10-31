@@ -53,6 +53,7 @@
   <div class="confetti-container" id="confetti" aria-hidden="true"></div>
   <dialog id="helpDialog"><button class="dialog-close" id="closeDialog" aria-label="Đóng">×</button><div class="eyebrow">QUYỀN TRỢ GIÚP</div><h2 id="helpTitle"></h2><div id="helpContent"></div><button class="primary-button" id="continueButton">TIẾP TỤC CHƠI <span>→</span></button></dialog>
   <dialog id="rewardDialog" class="reward-dialog" aria-labelledby="rewardTitle" aria-describedby="rewardSubtitle">
+    <div class="reward-scroll" tabindex="0">
     <div class="reward-confetti" id="rewardConfetti" aria-hidden="true"></div>
     <div class="reward-sparkles" aria-hidden="true">✦ <span>✧</span> ✦</div>
     <div class="eyebrow">THE LUCKY MOMENT</div>
@@ -83,8 +84,10 @@
     <div class="reward-result" role="status" aria-live="polite"><span id="rewardResultIcon">✦</span><div><strong id="rewardResultName">May mắn đang chuyển động…</strong><p id="rewardDescription">Dõi theo kim vàng để xem phần quà nào sẽ gọi tên bạn.</p></div></div>
     <button class="primary-button" id="claimReward" disabled>ĐANG QUAY…</button>
     <p class="reward-footnote">Mỗi câu đúng được quay một lần. Phần quà có thể trùng nhau.</p>
+    </div>
   </dialog>
   <dialog id="championDialog" class="champion-dialog" aria-labelledby="championTitle" aria-describedby="championDescription">
+    <div class="champion-scroll" tabindex="0">
     <div class="champion-rays" aria-hidden="true"></div>
     <div class="champion-confetti" id="championConfetti" aria-hidden="true"></div>
     <div class="champion-content">
@@ -104,6 +107,7 @@
         <button class="primary-button champion-replay" id="championReplay" type="button">CHƠI LẠI <span>↻</span></button>
         <button class="champion-dismiss" id="championClose" type="button">TRỞ LẠI SÂN KHẤU</button>
       </div>
+    </div>
     </div>
   </dialog>
 </body>
