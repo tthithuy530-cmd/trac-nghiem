@@ -30,7 +30,7 @@ jobs:
       - name: Prepare website
         run: |
           mkdir -p _site
-          cp index.html style.css script.js languages.js qr-code.svg qr-code.png _site/
+          cp index.html style.css script.js languages.js _site/
           touch _site/.nojekyll
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
