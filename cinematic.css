@@ -1,0 +1,193 @@
+/* Cinematic stage upgrades. Decorative layers never intercept clicks. */
+@keyframes openingDeparture {
+  0%, 66% { opacity: 1; visibility: visible; }
+  92%, 100% { opacity: 0; visibility: hidden; }
+}
+@keyframes openingCrestEntrance {
+  0% { opacity: 0; transform: translateY(24px) scale(.76); filter: blur(12px); }
+  37% { opacity: 1; transform: translateY(0) scale(1.045); filter: blur(0); }
+  65%, 100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+@keyframes openingGoldOrbit { to { transform: rotate(360deg); } }
+@keyframes openingLightSweep {
+  0% { opacity: 0; transform: rotate(-24deg) scaleY(.65); }
+  40% { opacity: .65; }
+  75%,100% { opacity: .07; transform: rotate(10deg) scaleY(1.1); }
+}
+@keyframes openingFloorGlow { 0% { opacity: 0; } 50% { opacity: .55; } 100% { opacity: .25; } }
+
+.cinematic-opening {
+  position: fixed; inset: 0; z-index: 80; pointer-events: none; overflow: hidden;
+  display: grid; place-items: center;
+  background:
+    radial-gradient(ellipse 43% 47% at 50% 50%, #54417e9c 0%, transparent 78%),
+    radial-gradient(ellipse 100% 78% at 50% 0%, #24296b 0%, transparent 82%),
+    #05091c;
+  animation: openingDeparture 3.1s ease-in-out both;
+}
+.cinematic-opening::before,.cinematic-opening::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+}
+.cinematic-opening::before {
+  background: repeating-linear-gradient(90deg,transparent 0 15.7%,#e9d18d0a 15.8%,transparent 16.1%);
+  mask-image: linear-gradient(#000b, transparent 82%);
+}
+.cinematic-opening::after {
+  background: radial-gradient(circle at 50% 50%,transparent 15%,#020513aa 95%);
+}
+.opening-lights { position: absolute; inset: 0; overflow: hidden; }
+.opening-lights span {
+  position: absolute; top: -35%; width: min(22vw,340px); height: 150%;
+  transform-origin: 50% 0; filter: blur(13px);
+  background: linear-gradient(180deg,#f5d18e66 0%,#ba90ff38 35%,transparent 81%);
+  animation: openingLightSweep 2.9s ease-out both;
+}
+.opening-lights span:nth-child(1){left:13%;animation-delay:.12s}
+.opening-lights span:nth-child(2){right:13%;animation-delay:.27s;transform:rotate(24deg)}
+.opening-lights span:nth-child(3){left:44%;width:12%;background:linear-gradient(180deg,#f9e9bd5a,transparent 87%);animation-delay:.34s}
+.opening-crest {
+  position: relative; z-index: 2; width: clamp(205px,29vmin,300px);
+  aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 45% 35%,#5b4389 0%,#2c235c 52%,#100f2f 82%);
+  border: 2px solid #f4d8a1; box-shadow: 0 0 0 7px #e4c18c13,0 0 0 9px #e4c18c77,0 0 105px #ba91ff62,0 0 180px #efc77a2e,inset 0 0 55px #c7a9ff24;
+  animation: openingCrestEntrance 2.8s cubic-bezier(.16,1,.26,1) both;
+}
+.opening-crest::before,.opening-crest::after {
+  content:'';position:absolute;inset:12px;border:1px solid #eed6a36b;border-radius:50%;
+}
+.opening-crest::after { inset:19px; border-style:dotted; border-color:#fce4b58c; }
+.opening-crest-orbit {
+  position:absolute;inset:-21px;border:1px solid #dec18d45;border-top:2px solid #fff0b5;
+  border-bottom:2px solid #c7b3ffb9;border-radius:50%;box-shadow:0 0 25px #f8db9560;
+  animation:openingGoldOrbit 7s linear infinite;
+}
+.opening-crest-core { display:flex; flex-direction:column; align-items:center; position:relative; z-index:1; gap:8px; text-align:center; }
+.opening-star { color:#f7d790;font-size:21px;text-shadow:0 0 22px #f3cf92a0; }
+.opening-name { font-size:clamp(16px,2.8vmin,25px);letter-spacing:3px;font-weight:700;color:#fbf2dc; }
+.opening-name strong { display:block; font-size:1.33em;color:#ffe6a9;letter-spacing:1px;text-shadow:0 2px 20px #f2c66c70; }
+.opening-rule { width:68%;height:1px;background:linear-gradient(90deg,transparent,#f3d79a,transparent); }
+.opening-crest-core small { font-size:8px;letter-spacing:1.35px;color:#ded1f0; }
+.opening-floor {
+  position:absolute;inset:68% -30% -45%;
+  background:radial-gradient(ellipse at 50% 0%,#d9b47757,transparent 45%),repeating-linear-gradient(90deg,#c9b1f70e 0 1px,transparent 1px 80px);
+  transform:perspective(430px) rotateX(63deg);animation:openingFloorGlow 2.7s ease-in-out both;
+}
+
+/* Slow luxury-light passes over key surfaces and controls. */
+@keyframes cinematicShimmer {
+  0%,16% { transform:translate3d(-70%,0,0) skewX(-19deg); opacity:0; }
+  21% {opacity:.38}
+  40% {opacity:.32}
+  49%,100% { transform:translate3d(520%,0,0) skewX(-19deg);opacity:0; }
+}
+.game-panel::before,.prize-panel::after,.lifeline-panel::after {
+  content:'';position:absolute;top:-25%;bottom:-25%;left:-39%;width:35%;z-index:2;
+  background:linear-gradient(90deg,transparent,#f9d8990c 34%,#fff0c13d 50%,#b6a6ff18 60%,transparent);
+  pointer-events:none;will-change:transform;animation:cinematicShimmer 12s ease-in-out infinite;
+}
+.prize-panel,.lifeline-panel{position:relative;overflow:hidden}
+.prize-panel::after{animation-delay:2s;opacity:.7}
+.lifeline-panel::after{animation-delay:4.5s;opacity:.6}
+.game-panel::before{opacity:.7}
+.primary-button{position:relative;overflow:hidden;isolation:isolate}
+.primary-button::before {
+  content:'';position:absolute;inset:-40% auto -40% -55%;width:35%;
+  background:linear-gradient(90deg,transparent,#fffefa80,transparent);
+  transform:skewX(-22deg);pointer-events:none;
+  animation:buttonGoldenGleam 6.6s ease-in-out infinite;
+}
+@keyframes buttonGoldenGleam {
+  0%,65%{left:-55%;opacity:0}
+  70%{opacity:.55}
+  86%,100%{left:150%;opacity:0}
+}
+@keyframes centerLightWave {
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.015)}
+  11%{opacity:1}
+  68%{opacity:.48}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1)}
+}
+.cinematic-wave-layer {position:fixed;inset:0;z-index:46;pointer-events:none;overflow:hidden}
+.cinematic-light-wave {
+  position:absolute;left:var(--wave-x);top:var(--wave-y);
+  width:var(--wave-size);height:var(--wave-size);border-radius:50%;
+  border:clamp(1px,.19vw,3px) solid #ffebb6a8;
+  box-shadow:0 0 26px 6px #fad28966,inset 0 0 25px 3px #d0b0ff55;
+  animation:centerLightWave 1.35s cubic-bezier(.18,.61,.22,1) both;
+  will-change:transform,opacity;
+}
+.cinematic-light-wave::before{
+  content:'';position:absolute;inset:8%;border-radius:50%;
+  border:1px solid #fff7df80;box-shadow:0 0 38px #c7a4ff66;
+}
+.cinematic-light-wave:nth-child(2){animation-delay:.15s;opacity:.7}
+
+/* The golden trace follows a selected/locked answer without covering its label. */
+@property --cinematic-trace-angle {
+  syntax:"<angle>";inherits:false;initial-value:0deg;
+}
+@keyframes cinematicGoldTrace { to{--cinematic-trace-angle:360deg} }
+@keyframes cinematicGoldBreath {50%{box-shadow:0 0 0 2px #ffe0a32c,0 0 34px #f7d28b55,inset 0 0 22px #dba34a22} }
+.answer.selected,.answer.locking{
+  position:relative;isolation:isolate;border-color:#f8dc9b;
+  box-shadow:0 0 0 1px #ffe7ad3d,0 0 24px #f3c76a5a,inset 0 0 17px #edb45b1c;
+}
+.answer.selected::before,.answer.locking::before {
+  content:'';position:absolute;inset:-3px;padding:3px;border-radius:inherit;pointer-events:none;
+  background:conic-gradient(from var(--cinematic-trace-angle),
+    transparent 0deg,transparent 235deg,#caa45f4d 264deg,#fff9df 294deg,#ffce73 320deg,transparent 347deg);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+  filter:drop-shadow(0 0 4px #ffdda0);
+  animation:cinematicGoldTrace 2.6s linear infinite;
+}
+.answer.selected::after,.answer.locking::after{
+  content:'';position:absolute;inset:2px;border-radius:inherit;pointer-events:none;
+  box-shadow:inset 0 0 23px #ffc86b12;
+}
+.answer.locking{
+  z-index:2;background:linear-gradient(105deg,#8d632e,#42335a 54%,#77522c);
+  animation:cinematicGoldBreath .72s ease-in-out infinite;
+}
+.answer.locking::before{animation-duration:1s}
+
+/* Darken the theatre, never the chosen answer, while the result is pending. */
+.cinematic-tension-veil{
+  position:fixed;inset:0;z-index:10;pointer-events:none;opacity:0;
+  background:radial-gradient(ellipse 65% 60% at 50% 50%,#080b1a58 0%,#03040edb 100%);
+  transition:opacity .34s ease-out;
+}
+body.answer-is-locked .cinematic-tension-veil{opacity:1}
+body.answer-is-locked .game-panel{
+  z-index:11;border-color:#e5bd7770;
+  box-shadow:0 0 0 1px #dfbc8a22,0 23px 100px #0009,0 0 85px #cc9a5831,inset 0 1px #f6daac26;
+}
+body.answer-is-locked .game-panel .answer:not(.locking){
+  opacity:.28;filter:saturate(.4) brightness(.73);transform:scale(.985);
+  transition:opacity .26s ease-out,filter .26s ease-out,transform .26s ease-out;
+}
+body.answer-is-locked .question-wrap{
+  border-color:#f3cc8b8c;box-shadow:inset 0 0 23px #eac17a12;
+}
+body.answer-is-locked .question-wrap h2{text-shadow:0 0 20px #ffe0ab2c}
+body.answer-is-locked .stage{filter:brightness(.53)}
+.stage{transition:filter .32s ease-out}
+
+@media(max-width:760px){
+  .opening-crest{width:218px}
+  .opening-lights span{width:32vw}
+  .opening-crest-core small{font-size:7px}
+  .game-panel::before,.prize-panel::after,.lifeline-panel::after{animation-duration:15s}
+  .cinematic-light-wave{border-width:1px}
+}
+@media(prefers-reduced-motion:reduce){
+  .cinematic-opening{display:none!important}
+  .game-panel::before,.prize-panel::after,.lifeline-panel::after,.primary-button::before{animation:none!important;display:none!important}
+  .answer.selected::before,.answer.locking::before{animation:none!important}
+  .answer.locking{animation:none!important}
+  .cinematic-tension-veil{transition:none!important}
+  .cinematic-light-wave{display:none!important}
+  .stage{transition:none!important}
+}

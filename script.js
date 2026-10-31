@@ -268,6 +268,7 @@ function selectAnswer(index) {
 }
 function lockAnswer() {
   if (phase !== 'playing' || selected === null) return;
+  document.body.classList.add('answer-is-locked');
   phase = 'revealing'; clearInterval(timer); updateLifelines();
   [...$('answers').children].forEach(button => { button.disabled = true; });
   $('answers').children[selected].classList.add('locking');
@@ -275,6 +276,7 @@ function lockAnswer() {
   revealTimer = setTimeout(() => reveal(false), 1600);
 }
 function reveal(timedOut) {
+  document.body.classList.remove('answer-is-locked');
   const q = getPresentedQuestion(current), correct = selected === q.correct && !timedOut;
   [...$('answers').children].forEach((button, i) => {
     button.disabled = true; button.classList.remove('locking', 'selected');
@@ -294,7 +296,31 @@ function reveal(timedOut) {
   }
   if (!correct) $('actionButton').focus({ preventScroll: true });
 }
+// Two lightweight, non-interactive rings originate from the game stage.
+function launchCinematicWave() {
+  const layer = $('cinematicWaveLayer');
+  if (!layer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  layer.replaceChildren();
+  const panel = document.querySelector('.game-panel');
+  const rect = panel.getBoundingClientRect();
+  const x = Math.round(rect.left + rect.width / 2);
+  const y = Math.round(rect.top + Math.min(rect.height / 2, window.innerHeight * .47));
+  const farX = Math.max(x, window.innerWidth - x);
+  const farY = Math.max(y, window.innerHeight - y);
+  const diameter = Math.ceil(Math.hypot(farX, farY) * 2.2);
+  for (let i = 0; i < 2; i++) {
+    const wave = document.createElement('div');
+    wave.className = 'cinematic-light-wave';
+    wave.style.setProperty('--wave-x', x + 'px');
+    wave.style.setProperty('--wave-y', y + 'px');
+    wave.style.setProperty('--wave-size', diameter + 'px');
+    wave.addEventListener('animationend', () => wave.remove(), { once: true });
+    layer.appendChild(wave);
+  }
+}
 function resetGame() {
+  document.body.classList.remove('answer-is-locked');
+  launchCinematicWave();
   clearInterval(timer); clearTimeout(revealTimer); cancelAnimationFrame(spinFrame); spinFrame = null;
   if ($('rewardDialog').open) $('rewardDialog').close();
   current = 0; earnedRewards = []; pendingReward = null; used.clear(); expired.clear(); helpUsedThisQuestion = false;
