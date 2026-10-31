@@ -41,6 +41,35 @@ const $ = id => document.getElementById(id);
 let phase = 'intro', current = 0, selected = null, seconds = 30, timer = null, revealTimer = null;
 let earnedRewards = [], soundEnabled = true, audioContext = null, used = new Set(), expired = new Set(), helpUsedThisQuestion = false, eliminated = [];
 const letters = ['A', 'B', 'C', 'D'];
+let answerOrders = questions.map(() => [0, 1, 2, 3]);
+function newAnswerOrders() {
+  answerOrders = questions.map((_, questionIndex) => {
+    const previous = answerOrders[questionIndex];
+    const order = [0, 1, 2, 3];
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    // The next play must not show exactly the same A/B/C/D positions.
+    if (order.every((value, i) => value === previous[i])) {
+      [order[0], order[1]] = [order[1], order[0]];
+    }
+    return order;
+  });
+}
+function getPresentedQuestion(index) {
+  const q = questions[index];
+  const order = answerOrders[index];
+  const correct = order.indexOf(q.correct);
+  const originalLetter = letters[q.correct];
+  return {
+    ...q,
+    answers: order.map(i => q.answers[i]),
+    votes: order.map(i => q.votes[i]),
+    correct,
+    phone: q.phone.replace(new RegExp('\\b' + originalLetter + '\\b', 'g'), letters[correct])
+  };
+}
 function renderJourney() {
   $('journeySteps').replaceChildren(...questions.map((q, index) => {
     const step = document.createElement('div');
@@ -215,7 +244,7 @@ function updateLifelines() {
   $('helpCount').textContent = `${3 - used.size - expired.size}/3`;
 }
 function renderQuestion() {
-  const q = questions[current]; phase = 'playing'; selected = null; seconds = 30; eliminated = [];
+  const q = getPresentedQuestion(current); phase = 'playing'; selected = null; seconds = 30; eliminated = [];
   $('progress').textContent = `CÂU HỎI ${current + 1} / ${questions.length}`;
   $('questionNumber').textContent = `CÂU ${String(current + 1).padStart(2, '0')} · ${q.topic}`;
   $('question').textContent = q.question;
@@ -246,7 +275,7 @@ function lockAnswer() {
   revealTimer = setTimeout(() => reveal(false), 1600);
 }
 function reveal(timedOut) {
-  const q = questions[current], correct = selected === q.correct && !timedOut;
+  const q = getPresentedQuestion(current), correct = selected === q.correct && !timedOut;
   [...$('answers').children].forEach((button, i) => {
     button.disabled = true; button.classList.remove('locking', 'selected');
     if (i === q.correct) { button.classList.add('correct'); button.classList.remove('eliminated'); button.querySelector('.answer-icon').textContent = '✓'; }
@@ -269,6 +298,7 @@ function resetGame() {
   clearInterval(timer); clearTimeout(revealTimer); cancelAnimationFrame(spinFrame); spinFrame = null;
   if ($('rewardDialog').open) $('rewardDialog').close();
   current = 0; earnedRewards = []; pendingReward = null; used.clear(); expired.clear(); helpUsedThisQuestion = false;
+  newAnswerOrders();
   $('confetti').replaceChildren(); $('winnings').textContent = 'Đang chờ bạn';
   $('winnings').removeAttribute('aria-label');
   renderJourney();
@@ -297,7 +327,7 @@ function useHelp(id) {
   if (phase !== 'playing' || used.has(id) || expired.has(id)) return;
   helpUsedThisQuestion = true;
   used.add(id); updateLifelines(); playSound('select');
-  const q = questions[current];
+  const q = getPresentedQuestion(current);
   if (id === 'fifty') {
     eliminated = q.answers.map((_, i) => i).filter(i => i !== q.correct).sort(() => Math.random() - .5).slice(0, 2);
     eliminated.forEach(i => { const button = $('answers').children[i]; button.classList.add('eliminated'); button.disabled = true; button.classList.remove('selected'); button.setAttribute('aria-pressed', 'false'); });

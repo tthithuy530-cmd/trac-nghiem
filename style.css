@@ -267,3 +267,6 @@ dialog p{font-size:1rem;line-height:1.8}
 .lifeline.expired .lifeline-icon::after{content:'×';position:absolute;display:grid;place-items:center;width:19px;height:19px;right:-5px;top:-7px;border-radius:50%;font:700 15px/1 sans-serif;color:#ffe0e4;background:#9d445a;border:2px solid #14182e}
 .lifeline.expired .lifeline-icon{position:relative}
 .lifeline.expired small{text-decoration:line-through;text-decoration-color:#c47786}
+
+/* Lock the desktop page while the prize modal is open; keep modal scrolling. */
+html:has(#rewardDialog[open]) { overflow: hidden; }

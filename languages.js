@@ -130,7 +130,7 @@ function localizedFeedback() {
   if(s!==f.textContent) f.textContent=s;
 }
 function redraw() {
- const qi=questions[current];
+ const qi=getPresentedQuestion(current);
  const qElement=document.getElementById('question');
  if(phase!=='intro' && qElement) {
    qElement.textContent=qi.question;
