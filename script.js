@@ -84,7 +84,7 @@ const rewards = [
   { icon: '🍭', name: 'Một kẹo mút', description: 'Một chút ngọt ngào cho câu trả lời xuất sắc của bạn!' },
   { icon: '🍿', name: 'Một gói bim bim', description: 'Giòn tan niềm vui! Một gói bim bim dành tặng bạn.' }
 ];
-let wheelRotation = 0, spinFrame = null, pendingReward = null;
+let wheelRotation = 0, spinFrame = null, pendingReward = null, wheelIntroTimer = null;
 
 // Rejection sampling gives all three prizes equal probability without modulo bias.
 function randomRewardIndex() {
@@ -99,8 +99,11 @@ function rewardAtPointer(rotation) {
 function openRewardWheel() {
   phase = 'rewarding'; pendingReward = randomRewardIndex();
   $('rewardConfetti').replaceChildren();
+  clearTimeout(wheelIntroTimer);
   $('actionButton').disabled = true;
-  $('rewardDialog').classList.remove('revealed');
+  $('rewardDialog').classList.remove('revealed', 'wheel-spinning');
+  $('rewardDialog').classList.add('wheel-opening');
+  $('wheelSpeedTrail').style.setProperty('--trail-opacity', '0');
   $('rewardTitle').textContent = 'Đúng rồi! Quay nhận quà thôi.';
   $('rewardSubtitle').textContent = 'Ba phần quà · Cơ hội bằng nhau · Một bất ngờ dành cho bạn';
   $('rewardResultIcon').textContent = '✦';
@@ -122,6 +125,11 @@ function openRewardWheel() {
     const eased = 1 - Math.pow(1 - progress, 4);
     wheelRotation = initial + distance * eased;
     $('prizeWheel').style.transform = `rotate(${wheelRotation}deg)`;
+    // Angular speed follows the derivative of the easing curve; no effect on prize odds.
+    const angularSpeed = distance * 4 * Math.pow(1 - progress, 3) / duration;
+    const speedEnergy = Math.min(1, angularSpeed / 1.35);
+    $('wheelSpeedTrail').style.setProperty('--trail-opacity', (speedEnergy * .9).toFixed(3));
+    $('wheelSpeedTrail').style.transform = `rotate(${wheelRotation * 1.16}deg)`;
     const sector = rewardAtPointer(wheelRotation);
     document.querySelectorAll('.reward-chip').forEach((chip, index) => chip.classList.toggle('under-pointer', sector === index));
     $('pointerPreview').textContent = `${rewards[sector].icon} ${rewards[sector].name}`;
@@ -130,9 +138,17 @@ function openRewardWheel() {
     if (sector !== lastSector) { tone(1050, 0, .045, 'triangle', .035); lastSector = sector; }
     if (progress < 1) { spinFrame = requestAnimationFrame(frame); return; }
     spinFrame = null;
+    $('rewardDialog').classList.remove('wheel-spinning');
+    $('wheelSpeedTrail').style.setProperty('--trail-opacity', '0');
     finishRewardSpin();
   }
-  spinFrame = requestAnimationFrame(frame);
+  wheelIntroTimer = setTimeout(() => {
+    wheelIntroTimer = null;
+    if (phase !== 'rewarding' || !$('rewardDialog').open) return;
+    $('rewardDialog').classList.remove('wheel-opening');
+    $('rewardDialog').classList.add('wheel-spinning');
+    spinFrame = requestAnimationFrame(frame);
+  }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 720);
 }
 function finishRewardSpin() {
   const reward = rewards[pendingReward];
@@ -151,6 +167,30 @@ function finishRewardSpin() {
   playSound('correct'); if (pendingReward === 0) playApplause();
   celebrate(); $('claimReward').focus({ preventScroll: true });
 }
+function showChampionMoment() {
+  const dialog = $('championDialog');
+  const prizeList = $('championPrizeList');
+  prizeList.replaceChildren(...earnedRewards.map((reward, index) => {
+    const item = document.createElement('div');
+    item.className = 'champion-prize';
+    const symbol = document.createElement('span');
+    symbol.className = 'champion-prize-icon';
+    symbol.textContent = reward.icon;
+    const caption = document.createElement('span');
+    caption.className = 'champion-prize-name';
+    caption.textContent = reward.name;
+    item.append(symbol, caption);
+    item.style.setProperty('--prize-order', String(index));
+    return item;
+  }));
+  $('championConfetti').replaceChildren();
+  dialog.showModal();
+  celebrate($('championConfetti'), window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 95);
+  playSound('champion');
+  $('championReplay').focus({ preventScroll: true });
+}
+$('championClose').addEventListener('click', () => $('championDialog').close());
+$('championReplay').addEventListener('click', resetGame);
 function claimReward() {
   if (phase !== 'rewarded') return;
   $('rewardDialog').close();
@@ -161,12 +201,13 @@ function claimReward() {
     $('questionNumber').textContent = '✦ CHÚC MỪNG NHÀ VÔ ĐỊCH ✦';
     feedback(`Xuất sắc! Bạn đã chinh phục cả ${questions.length} câu hỏi. Bộ quà của bạn: ${earnedRewards.map(item => `${item.icon} ${item.name}`).join(' + ')}.`, 'success');
     $('actionButton').innerHTML = 'CHƠI LẠI <span>↻</span>';
+    showChampionMoment();
   } else {
     phase = 'between'; feedback(`Bạn nhận được ${reward.icon} ${reward.name}! Sẵn sàng chinh phục câu tiếp theo?`, 'success');
     $('actionButton').innerHTML = 'CÂU TIẾP THEO <span>→</span>';
   }
   pendingReward = null;
-  $('actionButton').focus({ preventScroll: true });
+  if (!$('championDialog').open) $('actionButton').focus({ preventScroll: true });
 }
 $('claimReward').addEventListener('click', claimReward);
 $('rewardDialog').addEventListener('cancel', event => { event.preventDefault(); claimReward(); });
@@ -191,6 +232,10 @@ function playSound(kind) {
   else if (kind === 'wrong') { [220, 196, 146.83, 110].forEach((n, i) => tone(n, i * .18, .45, 'sawtooth', .045)); }
   else if (kind === 'lock') [196, 207.65, 196, 207.65, 261.63].forEach((n, i) => tone(n, i * .2, .2, 'triangle', .08));
   else if (kind === 'start') [261.63, 392, 523.25, 783.99].forEach((n, i) => tone(n, i * .11, .35, 'triangle'));
+  else if (kind === 'champion') [392, 523.25, 659.25, 783.99, 1046.5].forEach((n, i) => {
+    tone(n, i * .2, .8, 'triangle', .105);
+    tone(n / 2, i * .2, 1, 'sine', .052);
+  });
   else if (kind === 'tick') tone(880, 0, .07, 'sine', .04);
   else tone(660, 0, .1, 'sine', .06);
 }
@@ -221,6 +266,9 @@ function playApplause() {
 }
 function feedback(text, type = '') { $('feedback').textContent = text; $('feedback').className = `feedback ${type}`; }
 function updateTimer() {
+  const critical = phase === 'playing' && seconds > 0 && seconds <= 5;
+  $('timer').classList.toggle('critical', critical);
+  document.querySelector('.game-panel').classList.toggle('countdown-critical', critical);
   $('timerText').textContent = seconds;
   $('timer').setAttribute('aria-label', `Còn ${seconds} giây`);
   $('timerRing').style.strokeDashoffset = 106.82 * (1 - seconds / 30);
@@ -268,6 +316,13 @@ function selectAnswer(index) {
 }
 function lockAnswer() {
   if (phase !== 'playing' || selected === null) return;
+  const panel = document.querySelector('.game-panel');
+  const bounds = panel.getBoundingClientRect();
+  const chosen = $('answers').children[selected].getBoundingClientRect();
+  panel.style.setProperty('--locked-x', ((chosen.left + chosen.width / 2 - bounds.left) / bounds.width * 100).toFixed(2) + '%');
+  panel.style.setProperty('--locked-y', ((chosen.top + chosen.height / 2 - bounds.top) / bounds.height * 100).toFixed(2) + '%');
+  panel.classList.remove('countdown-critical');
+  $('timer').classList.remove('critical');
   document.body.classList.add('answer-is-locked');
   phase = 'revealing'; clearInterval(timer); updateLifelines();
   [...$('answers').children].forEach(button => { button.disabled = true; });
@@ -277,6 +332,8 @@ function lockAnswer() {
 }
 function reveal(timedOut) {
   document.body.classList.remove('answer-is-locked');
+  $('timer').classList.remove('critical');
+  document.querySelector('.game-panel').classList.remove('countdown-critical');
   const q = getPresentedQuestion(current), correct = selected === q.correct && !timedOut;
   [...$('answers').children].forEach((button, i) => {
     button.disabled = true; button.classList.remove('locking', 'selected');
@@ -319,9 +376,12 @@ function launchCinematicWave() {
   }
 }
 function resetGame() {
+  if ($('championDialog').open) $('championDialog').close();
   document.body.classList.remove('answer-is-locked');
   launchCinematicWave();
-  clearInterval(timer); clearTimeout(revealTimer); cancelAnimationFrame(spinFrame); spinFrame = null;
+  clearInterval(timer); clearTimeout(revealTimer); clearTimeout(wheelIntroTimer);
+  wheelIntroTimer = null;
+  if (spinFrame !== null) cancelAnimationFrame(spinFrame); spinFrame = null;
   if ($('rewardDialog').open) $('rewardDialog').close();
   current = 0; earnedRewards = []; pendingReward = null; used.clear(); expired.clear(); helpUsedThisQuestion = false;
   newAnswerOrders();
@@ -378,12 +438,12 @@ document.addEventListener('keydown', event => {
   if (index !== -1 && phase === 'playing') { event.preventDefault(); selectAnswer(index); }
   if (event.key === 'Enter' && phase === 'playing' && selected !== null) { event.preventDefault(); lockAnswer(); }
 });
-function celebrate() {
+function celebrate(target = null, amount = 75) {
   const colors = ['#f5c76b', '#a69bff', '#3fe5a0', '#f8f2d7', '#76bbff'];
-  for (let i = 0; i < 75; i++) {
+  for (let i = 0; i < amount; i++) {
     const piece = document.createElement('i'); piece.className = 'confetti';
     piece.style.cssText = `left:${Math.random() * 100}%;background:${colors[i % colors.length]};animation-delay:${Math.random() * .8}s;animation-duration:${2.3 + Math.random() * 2}s;--drift:${Math.random() * 250 - 125}px;transform:rotate(${Math.random() * 360}deg)`;
-    ($('rewardDialog').open ? $('rewardConfetti') : $('confetti')).appendChild(piece); setTimeout(() => piece.remove(), 5500);
+    (target || ($('rewardDialog').open ? $('rewardConfetti') : $('confetti'))).appendChild(piece); setTimeout(() => piece.remove(), 5500);
   }
 }
 renderJourney();

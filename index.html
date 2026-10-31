@@ -36,6 +36,7 @@
     </section>
     <div class="game-layout">
       <section class="game-panel" aria-label="Khu vực câu hỏi">
+        <div class="cinematic-lock-beam" aria-hidden="true"></div>
         <div class="game-toolbar"><div class="question-progress"><span class="status-dot"></span><span id="progress">THỬ THÁCH 5 CÂU HỎI</span></div><div class="timer" id="timer" aria-label="Thời gian còn lại"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17"/><circle id="timerRing" cx="20" cy="20" r="17"/></svg><span id="timerText">30</span></div><div class="prize-label">PHẦN THƯỞNG<strong id="questionPrize">👏 🍭 🍿 Quà bí mật</strong></div></div>
         <div class="question-wrap"><div class="question-number" id="questionNumber">BẠN ĐÃ SẴN SÀNG?</div><h2 id="question">Chinh phục ghế nóng,<br>đánh thức bản lĩnh triệu phú.</h2><div class="question-decoration" aria-hidden="true">◆</div></div>
         <div class="answers" id="answers"><button class="answer preview" disabled><span class="letter">A</span><span>Kiến thức</span><span class="answer-icon"></span></button><button class="answer preview" disabled><span class="letter">B</span><span>Bản lĩnh</span><span class="answer-icon"></span></button><button class="answer preview" disabled><span class="letter">C</span><span>Tự tin</span><span class="answer-icon"></span></button><button class="answer preview" disabled><span class="letter">D</span><span>Chiến thắng</span><span class="answer-icon"></span></button></div>
@@ -58,7 +59,9 @@
     <h2 id="rewardTitle">Vòng quay quà tặng</h2>
     <p id="rewardSubtitle">Ba phần quà · Cơ hội bằng nhau</p>
     <div class="wheel-stage">
+      <div class="wheel-opening-flare" aria-hidden="true"></div>
       <div class="wheel-halo" aria-hidden="true"></div>
+      <div class="wheel-speed-trail" id="wheelSpeedTrail" aria-hidden="true"></div>
       <div class="wheel-pointer" aria-hidden="true"></div>
       <div class="wheel-rim">
         <div class="prize-wheel" id="prizeWheel" aria-hidden="true">
@@ -80,6 +83,28 @@
     <div class="reward-result" role="status" aria-live="polite"><span id="rewardResultIcon">✦</span><div><strong id="rewardResultName">May mắn đang chuyển động…</strong><p id="rewardDescription">Dõi theo kim vàng để xem phần quà nào sẽ gọi tên bạn.</p></div></div>
     <button class="primary-button" id="claimReward" disabled>ĐANG QUAY…</button>
     <p class="reward-footnote">Mỗi câu đúng được quay một lần. Phần quà có thể trùng nhau.</p>
+  </dialog>
+  <dialog id="championDialog" class="champion-dialog" aria-labelledby="championTitle" aria-describedby="championDescription">
+    <div class="champion-rays" aria-hidden="true"></div>
+    <div class="champion-confetti" id="championConfetti" aria-hidden="true"></div>
+    <div class="champion-content">
+      <div class="champion-kicker">✦ &nbsp; THE GRAND FINALE &nbsp; ✦</div>
+      <div class="champion-medallion" aria-hidden="true">
+        <div class="champion-medallion-ring"></div>
+        <span class="champion-crown">♛</span>
+        <span class="champion-medallion-star">✦ ✦ ✦</span>
+      </div>
+      <div class="champion-eyebrow">CHINH PHỤC GHẾ NÓNG</div>
+      <h2 id="championTitle">NHÀ VÔ ĐỊCH!</h2>
+      <p id="championDescription">Xuất sắc! Bạn đã hoàn thành cả 5 câu hỏi.</p>
+      <div class="champion-score"><span>THÀNH TÍCH XUẤT SẮC</span><strong>05 <em>/</em> 05</strong><small>CÂU TRẢ LỜI CHÍNH XÁC</small></div>
+      <div class="champion-trophy-label">✦ BỘ QUÀ CHIẾN THẮNG ✦</div>
+      <div class="champion-prizes" id="championPrizeList"></div>
+      <div class="champion-actions">
+        <button class="primary-button champion-replay" id="championReplay" type="button">CHƠI LẠI <span>↻</span></button>
+        <button class="champion-dismiss" id="championClose" type="button">TRỞ LẠI SÂN KHẤU</button>
+      </div>
+    </div>
   </dialog>
 </body>
 </html>
