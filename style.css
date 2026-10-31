@@ -261,3 +261,9 @@ dialog p{font-size:1rem;line-height:1.8}
  .language-icon{width:28px;height:28px}
  .language-menu{width:180px}
 }
+
+/* Lifelines lost when advancing without using help (maximum two). */
+.lifeline.expired .lifeline-icon{border-color:#76516a;color:#9e8797;background:#30223866;filter:grayscale(1)}
+.lifeline.expired .lifeline-icon::after{content:'×';position:absolute;display:grid;place-items:center;width:19px;height:19px;right:-5px;top:-7px;border-radius:50%;font:700 15px/1 sans-serif;color:#ffe0e4;background:#9d445a;border:2px solid #14182e}
+.lifeline.expired .lifeline-icon{position:relative}
+.lifeline.expired small{text-decoration:line-through;text-decoration-color:#c47786}

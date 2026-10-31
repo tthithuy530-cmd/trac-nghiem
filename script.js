@@ -39,7 +39,7 @@ const questions = [
 ];
 const $ = id => document.getElementById(id);
 let phase = 'intro', current = 0, selected = null, seconds = 30, timer = null, revealTimer = null;
-let earnedRewards = [], soundEnabled = true, audioContext = null, used = new Set(), eliminated = [];
+let earnedRewards = [], soundEnabled = true, audioContext = null, used = new Set(), expired = new Set(), helpUsedThisQuestion = false, eliminated = [];
 const letters = ['A', 'B', 'C', 'D'];
 function renderJourney() {
   $('journeySteps').replaceChildren(...questions.map((q, index) => {
@@ -208,10 +208,11 @@ function startTimer() {
 }
 function updateLifelines() {
   ['fifty', 'audience', 'phone'].forEach(id => {
-    $(id).disabled = phase !== 'playing' || used.has(id);
+    $(id).disabled = phase !== 'playing' || used.has(id) || expired.has(id);
     $(id).classList.toggle('used', used.has(id));
+    $(id).classList.toggle('expired', expired.has(id));
   });
-  $('helpCount').textContent = `${3 - used.size}/3`;
+  $('helpCount').textContent = `${3 - used.size - expired.size}/3`;
 }
 function renderQuestion() {
   const q = questions[current]; phase = 'playing'; selected = null; seconds = 30; eliminated = [];
@@ -267,7 +268,7 @@ function reveal(timedOut) {
 function resetGame() {
   clearInterval(timer); clearTimeout(revealTimer); cancelAnimationFrame(spinFrame); spinFrame = null;
   if ($('rewardDialog').open) $('rewardDialog').close();
-  current = 0; earnedRewards = []; pendingReward = null; used.clear();
+  current = 0; earnedRewards = []; pendingReward = null; used.clear(); expired.clear(); helpUsedThisQuestion = false;
   $('confetti').replaceChildren(); $('winnings').textContent = 'Đang chờ bạn';
   $('winnings').removeAttribute('aria-label');
   renderJourney();
@@ -276,7 +277,14 @@ function resetGame() {
 $('actionButton').addEventListener('click', () => {
   if (phase === 'intro' || phase === 'won' || phase === 'lost') resetGame();
   else if (phase === 'playing') lockAnswer();
-  else if (phase === 'between') { current++; playSound('start'); renderQuestion(); }
+  else if (phase === 'between') {
+    if (!helpUsedThisQuestion && expired.size < 2) {
+      const toExpire = ['fifty', 'audience', 'phone'].find(id => !used.has(id) && !expired.has(id));
+      if (toExpire) expired.add(toExpire);
+    }
+    helpUsedThisQuestion = false;
+    current++; playSound('start'); renderQuestion();
+  }
 });
 $('soundButton').addEventListener('click', () => {
   soundEnabled = !soundEnabled; initAudio();
@@ -286,7 +294,8 @@ $('soundButton').addEventListener('click', () => {
   if (soundEnabled) playSound('select');
 });
 function useHelp(id) {
-  if (phase !== 'playing' || used.has(id)) return;
+  if (phase !== 'playing' || used.has(id) || expired.has(id)) return;
+  helpUsedThisQuestion = true;
   used.add(id); updateLifelines(); playSound('select');
   const q = questions[current];
   if (id === 'fifty') {
