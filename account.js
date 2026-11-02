@@ -11,6 +11,10 @@ const rankingMessage = document.getElementById('rankingMessage');
 const loginName = document.getElementById('loginName');
 const loginButton = loginForm.querySelector('button[type="submit"]');
 const leaderboardLimit = 50;
+// Release the pre-paint session guard only once login status is settled.
+const finishSessionRestore = () => {
+  document.documentElement.classList.remove('session-resuming');
+};
 
 document.body.classList.add('login-required');
 authOverlay.hidden = false;
@@ -108,6 +112,7 @@ if (missing.length) {
     '). Xem README-DEPLOY.md để kết nối cơ sở dữ liệu.';
   loginButton.disabled = true;
   rankingRows.textContent = 'Đang chờ cấu hình Firebase.';
+  finishSessionRestore();
 } else {
   try {
     // Version from the official Firebase CDN guide; no npm or bundler required.
@@ -160,6 +165,7 @@ if (missing.length) {
       loginStatus.textContent = '';
       rankingMessage.textContent = 'Bảng xếp hạng được cập nhật trực tiếp giữa các thiết bị.';
       hideLogin();
+      finishSessionRestore();
       leaderboard();
     };
 
@@ -297,12 +303,15 @@ if (missing.length) {
         loginStatus.textContent = 'Không khôi phục được phiên: ' + error.message;
       } finally {
         loginButton.disabled = false;
+        finishSessionRestore();
       }
     } else {
+      finishSessionRestore();
       loginStatus.textContent = '';
       loginName.focus({preventScroll: true});
     }
   } catch (error) {
+    finishSessionRestore();
     loginStatus.textContent = 'Không tải được Firebase SDK: ' + error.message;
     loginButton.disabled = true;
     rankingRows.textContent = 'Không kết nối được Firebase.';

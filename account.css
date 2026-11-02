@@ -276,3 +276,66 @@
  .question-wrap{padding-inline:10px}
  .answer{padding-inline:10px}
 }
+
+/* Session resume overlay: visible instead of login during async Firebase hydration. */
+.session-boot{position:fixed;z-index:100005;inset:0;display:none;align-items:center;justify-content:center;padding:20px;min-height:100dvh;background:radial-gradient(ellipse at 50% 15%,#26234c 0%,#10152c 50%,#080c20 100%);color:#f4f0fb;font-family:system-ui,-apple-system,"Segoe UI","Be Vietnam Pro",sans-serif}
+html.session-resuming .session-boot{display:flex}
+.session-boot-card{width:min(100%,320px);display:flex;align-items:center;flex-direction:column;text-align:center;gap:10px}
+.session-boot-mark{font-size:34px;color:#e9c987}
+.session-boot-brand{font-size:12px;font-weight:800;letter-spacing:1.4px;color:#edddba}
+.session-boot-progress{width:42px;height:42px;border:2px solid #e5d3a838;border-top-color:#f1d69d;border-radius:50%;animation:session-boot-spin .8s linear infinite;margin:18px 0 4px}
+.session-boot-card strong{font-size:15px;font-weight:700;line-height:1.5}
+.session-boot-card p{font-size:12px;color:#b5b9d1;margin:0;line-height:1.6}
+@keyframes session-boot-spin{to{transform:rotate(360deg)}}
+
+/* Login modal: proper safe-area layout, scrollable on very small and short phones. */
+.login-overlay{box-sizing:border-box;display:flex;align-items:safe center;justify-content:center;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;padding:max(14px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));background:radial-gradient(ellipse at 50% 4%,#292750 0%,#15182f 43%,#090d22 100%)}
+.login-card{box-sizing:border-box;min-width:0;flex:0 0 auto;width:min(100%,450px);max-width:100%;max-height:none;margin-block:auto;padding:clamp(22px,4.5vw,36px);border-radius:22px;text-align:left;background:linear-gradient(151deg,#252443 0%,#181a36 57%,#12152d 100%);border:1px solid rgba(228,204,156,.42);box-shadow:0 22px 70px rgba(3,5,18,.37),inset 0 1px rgba(255,255,255,.08);font-family:system-ui,-apple-system,"Segoe UI","Be Vietnam Pro",sans-serif}
+.login-card .login-star{display:grid;place-items:center;width:46px;height:46px;margin:0 0 16px;border-radius:13px;border:1px solid rgba(236,207,144,.33);background:#caa2671b;color:#edce93;font-size:25px;line-height:1}
+.login-card .login-kicker{margin:0;color:#cfb88d;font-size:10px;font-weight:700;letter-spacing:1.4px;line-height:1.5}
+.login-card h2{margin:9px 0 10px;color:#fff9f1;font-size:clamp(21px,4vw,27px);font-weight:800;line-height:1.32;letter-spacing:-.6px;overflow-wrap:break-word}
+.login-card>p:not(#playerStatus):not(.login-kicker){margin:0;color:#c1c5da;font-size:13px;line-height:1.65}
+.login-card label{margin:22px 0 9px;text-align:left;color:#edd3a4;font-size:11px;font-weight:750;letter-spacing:1px}
+.login-card input{display:block;width:100%;min-width:0;height:51px;padding:12px 15px;font-size:16px;line-height:1.4;border-radius:11px;border:1px solid rgba(173,166,208,.55);background:#0e132b;color:#fff;font-weight:600;box-shadow:none;outline:none}
+.login-card input::placeholder{color:#8991ad;font-weight:450;opacity:1}
+.login-card input:focus{outline:none;border-color:#e7ca91;box-shadow:0 0 0 3px #e5c88a24}
+.login-card #playerStatus{display:block;margin:0;padding:0;color:#f7b6aa;font-size:12px;min-height:0;line-height:1.6;overflow-wrap:anywhere}
+.login-card #playerStatus:empty{display:none}
+.login-card #playerStatus:not(:empty){margin:12px 0 0;padding:10px 12px;border-radius:9px;background:#a7534520;border:1px solid #e0a28e26}
+.login-card button[type=submit]{display:flex;justify-content:center;align-items:center;width:100%;min-height:50px;margin:18px 0 10px;padding:12px;border-radius:11px;background:linear-gradient(105deg,#c99b57,#f3d48e);color:#241b23;font-family:inherit;font-size:13px;font-weight:800;letter-spacing:.1px;line-height:1.4;white-space:normal;box-shadow:0 8px 22px #04051124}
+.login-card button[type=submit]:disabled{opacity:.6}
+.login-card small{display:block;color:#9ea8c3;text-align:left;font-size:11px;line-height:1.6;margin:0}
+@media(max-width:430px){
+ .login-overlay{padding:12px}
+ .login-card{width:100%;padding:22px 18px;border-radius:17px}
+ .login-card .login-star{width:40px;height:40px;margin-bottom:13px;border-radius:11px;font-size:22px}
+ .login-card h2{font-size:22px;line-height:1.3;margin:8px 0 9px}
+ .login-card>p:not(#playerStatus):not(.login-kicker){font-size:12px;line-height:1.6}
+ .login-card label{font-size:10px;margin:17px 0 8px}
+ .login-card input{height:49px;padding:11px 13px;font-size:16px}
+ .login-card button[type=submit]{min-height:48px;margin:15px 0 9px;font-size:12px}
+ .login-card small{font-size:10.5px;line-height:1.55}
+}
+@media(max-width:300px){
+ .login-overlay{padding:8px}
+ .login-card{padding:18px 13px;border-radius:13px}
+ .login-card .login-star{height:35px;width:35px;margin-bottom:10px;font-size:19px}
+ .login-card .login-kicker{font-size:9px;letter-spacing:.9px}
+ .login-card h2{font-size:19px;line-height:1.28;margin:6px 0 8px;letter-spacing:-.4px}
+ .login-card>p:not(#playerStatus):not(.login-kicker){font-size:11.5px;line-height:1.5}
+ .login-card label{font-size:10px;margin:14px 0 7px}
+ .login-card input{height:46px;padding:10px 11px}
+ .login-card button[type=submit]{min-height:46px;padding:9px 6px;margin:13px 0 8px;font-size:11.5px}
+ .login-card small{font-size:10px}
+}
+@media(max-height:530px){
+ .login-overlay{align-items:flex-start;padding-top:max(8px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}
+ .login-card{margin-block:auto;padding-top:14px;padding-bottom:14px}
+ .login-card .login-star{height:30px;width:30px;margin-bottom:8px;font-size:18px}
+ .login-card h2{font-size:19px;margin:5px 0 6px}
+ .login-card label{margin-top:10px}
+ .login-card input{height:44px}
+ .login-card button[type=submit]{min-height:43px;margin:10px 0 7px}
+ .login-card small{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){.session-boot-progress{animation:none;border-top-color:#f1d69d}}

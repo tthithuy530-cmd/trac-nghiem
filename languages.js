@@ -129,6 +129,7 @@ const phrases = [
  ["Đang chờ cấu hình Firebase.","Waiting for Firebase setup.","Firebase 설정 대기 중입니다."],
  ["Không kết nối được Firebase.","Cannot connect to Firebase.","Firebase에 연결할 수 없습니다."],
  ["Đang khôi phục phiên chơi…","Restoring your session…","이전 게임 세션을 복원하는 중…"],
+ ["Đang kết nối tài khoản của bạn.","Connecting to your account.","계정에 연결하는 중입니다."],
  ["Không tìm thấy hồ sơ. Vui lòng nhập tên để tiếp tục.","Profile not found. Enter your name to continue.","프로필을 찾을 수 없습니다. 계속하려면 이름을 입력하세요."],
  ["Phiên đã hết hạn. Vui lòng nhập tên để tiếp tục.","Session expired. Enter your name to continue.","세션이 만료되었습니다. 계속하려면 이름을 입력하세요."],
  ["Thông tin phiên chơi","Player session","플레이어 세션"],

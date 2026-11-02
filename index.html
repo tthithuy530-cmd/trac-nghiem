@@ -6,15 +6,38 @@
   <meta name="theme-color" content="#080b25">
   <meta name="description" content="Bước vào ghế nóng Ai là triệu phú. 5 câu hỏi về kỹ năng làm việc nhóm, những quyền trợ giúp và trải nghiệm sân khấu đầy ánh sáng.">
   <title>Ai là triệu phú — Ghế nóng đang chờ</title>
+  <script>
+    // Hide the login form before the first paint when a Firebase session should be restored.
+    try {
+      if (localStorage.getItem('trivia-session-active') === '1') {
+        document.documentElement.classList.add('session-resuming');
+      }
+    } catch (_) {}
+  </script>
+  <style>
+    #sessionBoot { display: none; }
+    html.session-resuming #sessionBoot { display: flex !important; }
+    html.session-resuming #playerAuth,
+    html.session-resuming .cinematic-opening { display: none !important; }
+  </style>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="cinematic.css">
-  <link rel="stylesheet" href="account.css?v=compact-20261102-2">
+  <link rel="stylesheet" href="account.css?v=mobile-login-session-20261102-3">
   <script src="firebase-config.js" defer></script>
   <script src="script.js" defer></script>
   <script type="module" src="account.js"></script>
   <script src="languages.js" defer></script>
 </head>
 <body>
+  <div id="sessionBoot" class="session-boot" role="status" aria-live="polite">
+    <div class="session-boot-card">
+      <span class="session-boot-mark" aria-hidden="true">✦</span>
+      <span class="session-boot-brand">AI LÀ TRIỆU PHÚ</span>
+      <span class="session-boot-progress" aria-hidden="true"></span>
+      <strong>Đang khôi phục phiên chơi…</strong>
+      <p>Đang kết nối tài khoản của bạn.</p>
+    </div>
+  </div>
   <div class="cinematic-opening" aria-hidden="true">
     <div class="opening-lights"><span></span><span></span><span></span></div>
     <div class="opening-crest">
