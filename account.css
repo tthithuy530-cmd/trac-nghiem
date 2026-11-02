@@ -131,12 +131,7 @@
  .emblem{width:104px;height:104px;margin:12px auto}
  .emblem-inner{transform:scale(.65)}
  .game-panel{padding:12px}
- .reward-dialog{--wheel-size:clamp(130px,calc(58dvh - 178px),176px)}
- .reward-dialog .reward-scroll{max-height:calc(100dvh - 12px);overflow-y:auto;overscroll-behavior:contain}
- .reward-dialog .reward-scroll::-webkit-scrollbar{display:none}
- .reward-dialog .reward-sparkles{display:none}
- .reward-dialog .reward-chip small{display:none}
- .reward-dialog .reward-footnote{font-size:8px}
+ /* Prize-modal sizing is maintained with its layout in cinematic.css. */
  .champion-dialog .champion-scroll{max-height:calc(100dvh - 12px);overflow-y:auto}
 }
 @media (max-width:430px) and (orientation:landscape) {
