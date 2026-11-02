@@ -131,6 +131,8 @@ if (missing.length) {
 
 
     const getIdentity = async (fresh = false) => {
+      // Firebase restores persisted anonymous users asynchronously on page reload.
+      await auth.authStateReady();
       if (fresh && auth.currentUser) await signOut(auth);
       if (auth.currentUser && !fresh) return auth.currentUser;
       return (await signInAnonymously(auth)).user;
@@ -192,6 +194,7 @@ if (missing.length) {
         if (!player) throw Error('Không thể tạo hồ sơ người chơi.');
 
         localStorage.setItem('trivia-last-name', name);
+        localStorage.setItem('trivia-session-active', '1');
         enter(player);
       } catch (error) {
         if (error.code === 'auth/configuration-not-found' || error.code === 'auth/operation-not-allowed') {
@@ -263,6 +266,7 @@ if (missing.length) {
       gameAccount.uid = null;
       gameAccount.player = null;
       playerLabel.textContent = 'Chưa đăng nhập';
+      localStorage.removeItem('trivia-session-active');
       loginName.value = '';
       loginStatus.textContent = '';
       rankingRows.textContent = 'Đăng nhập để xem bảng xếp hạng.';
@@ -271,8 +275,33 @@ if (missing.length) {
 
     });
     loginName.value = localStorage.getItem('trivia-last-name') || '';
-    loginStatus.textContent = '';
-    loginName.focus({preventScroll: true});
+    if (localStorage.getItem('trivia-session-active') === '1') {
+      loginStatus.textContent = 'Đang khôi phục phiên chơi…';
+      loginButton.disabled = true;
+      try {
+        await auth.authStateReady();
+        const user = auth.currentUser;
+        if (user) {
+          const profile = await getDoc(doc(db, 'players', user.uid));
+          if (profile.exists()) {
+            enter(profile.data());
+          } else {
+            localStorage.removeItem('trivia-session-active');
+            loginStatus.textContent = 'Không tìm thấy hồ sơ. Vui lòng nhập tên để tiếp tục.';
+          }
+        } else {
+          localStorage.removeItem('trivia-session-active');
+          loginStatus.textContent = 'Phiên đã hết hạn. Vui lòng nhập tên để tiếp tục.';
+        }
+      } catch (error) {
+        loginStatus.textContent = 'Không khôi phục được phiên: ' + error.message;
+      } finally {
+        loginButton.disabled = false;
+      }
+    } else {
+      loginStatus.textContent = '';
+      loginName.focus({preventScroll: true});
+    }
   } catch (error) {
     loginStatus.textContent = 'Không tải được Firebase SDK: ' + error.message;
     loginButton.disabled = true;
