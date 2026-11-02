@@ -146,3 +146,44 @@
  .login-overlay{align-items:start}
  .login-card{margin-block:auto}
 }
+
+/* Ultra-narrow phones, verified at 264 x 642 CSS pixels. */
+@media (max-width:300px) {
+ .topbar{padding:9px 10px;gap:7px}
+ .brand{width:100%;min-width:0;gap:8px;font-size:11px}
+ .brand-mark{font-size:19px}
+ .brand small{display:none}
+ .header-actions{width:100%;display:grid;grid-template-columns:minmax(0,1fr) 42px;gap:7px}
+ .language-picker{min-width:0}
+ .language-trigger{width:100%;min-width:0;min-height:40px;gap:7px;padding:5px 8px}
+ .language-current strong{font-size:11px}
+ .language-menu{width:min(188px,calc(100vw - 24px))}
+ .sound-button{width:42px;height:40px;min-height:40px;border-radius:12px;padding:0;display:grid;place-items:center;font-size:20px;line-height:1}
+ .sound-button span{display:none}
+ .session-strip{padding:9px 10px;gap:8px;margin-top:9px}
+ .session-player{width:100%;gap:8px}
+ .session-player-copy strong{max-width:calc(100vw - 100px)}
+ .session-actions{width:100%;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px}
+ .session-ranking-link,.session-switch{min-width:0;min-height:39px;max-height:none;line-height:1.25;gap:5px;padding:8px 5px;font-size:10px;overflow-wrap:normal;word-break:normal}
+ .session-ranking-link span:first-child{display:none}
+ .session-ranking-link span:last-child{display:none}
+ .hero{padding:9px 0 12px}
+ .hero .eyebrow{font-size:8px;letter-spacing:.25px;gap:4px}
+ .hero .eyebrow>span{width:8px}
+ .emblem{width:100px;height:100px;margin:13px auto}
+ .emblem-inner{transform:scale(.63)}
+ .hero h1{font-size:17px;line-height:1.4}
+ .hero p{font-size:11px}
+ .game-panel{padding:12px 9px}
+ .question-wrap{padding:13px 9px 16px}
+ .question-wrap h2{font-size:16px}
+ .ranking-panel{padding:12px 8px}
+ .ranking-heading h2{font-size:21px}
+ .ranking-podium-area,.ranking-list-area{padding:12px 6px}
+ .ranking-area-heading{flex-wrap:wrap}
+ .ranking-row{grid-template-columns:23px minmax(0,1fr) 33px 43px;gap:3px}
+ .ranking-row strong{font-size:10px}
+ .ranking-row small{font-size:8px}
+ .login-overlay{padding:6px}
+ .login-card{padding:17px 12px}
+}
