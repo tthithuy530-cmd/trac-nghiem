@@ -84,7 +84,67 @@ const phrases = [
  ['Kết nối người thân','Phone a friend','지인에게 전화'],
  ['Kết quả bình chọn mô phỏng từ khán giả tại trường quay.','Simulated voting results from the studio audience.','스튜디오 관객의 모의 투표 결과입니다.'],
  ['Còn','Remaining','남은 시간'],
- ['giây','seconds','초']
+ ['giây','seconds','초'],
+ ["CHÀO MỪNG ĐẾN SÂN KHẤU","WELCOME TO THE STAGE","무대에 오신 것을 환영합니다"],
+ ["Nhập tên để bắt đầu thi đấu và ghi danh trên bảng xếp hạng.","Enter your name to play and join the leaderboard.","이름을 입력하고 게임에 참여해 순위표에 이름을 올리세요."],
+ ["TÊN NGƯỜI CHƠI","PLAYER NAME","플레이어 이름"],
+ ["Nhập tên của bạn","Enter your name","이름을 입력하세요"],
+ ["BƯỚC VÀO SÂN KHẤU","ENTER THE STAGE","무대 입장"],
+ ["Chỉ cần nhập tên, không cần mật khẩu. Mỗi trình duyệt có hồ sơ riêng.","No password needed. Each browser has its own player profile.","비밀번호 없이 이름만 입력하세요. 브라우저마다 별도 프로필이 생성됩니다."],
+ ["NGƯỜI CHƠI HIỆN TẠI","CURRENT PLAYER","현재 플레이어"],
+ ["Chưa đăng nhập","Not signed in","로그인하지 않음"],
+ ["ĐANG THI ĐẤU","IN THE GAME","게임 참여 중"],
+ ["Bảng xếp hạng","Leaderboard","순위표"],
+ ["Đổi người chơi","Switch player","플레이어 변경"],
+ ["ĐỒNG BỘ TRỰC TUYẾN","LIVE SYNC","실시간 동기화"],
+ ["Bảng xếp hạng ","Leaderboard ","순위표 "],
+ ["vinh danh","hall of fame","명예의 전당"],
+ ["Ghi dấu những người chơi xuất sắc trên hành trình chinh phục ghế nóng.","Celebrating the top performers on the road to the hot seat.","도전의 무대에서 빛나는 최고의 플레이어들을 소개합니다."],
+ ["Làm mới","Refresh","새로고침"],
+ ["✦ TOP 3 XUẤT SẮC","✦ TOP 3 PLAYERS","✦ 상위 3명"],
+ ["Những ngôi sao dẫn đầu","The stars of the show","빛나는 상위 플레이어"],
+ ["Vinh quang dành cho người kiên trì","Glory belongs to the persistent","끝까지 도전하는 사람에게 영광을"],
+ ["DANH SÁCH THÀNH TÍCH","RANKING LIST","성적 순위"],
+ ["TOP 50 NGƯỜI CHƠI","TOP 50 PLAYERS","상위 50명"],
+ ["HẠNG / NGƯỜI CHƠI","RANK / PLAYER","순위 / 플레이어"],
+ ["THÀNH TÍCH","SCORE","점수"],
+ ["Kết quả được cập nhật tự động","Scores update automatically","점수가 자동으로 갱신됩니다"],
+ ["05 CÂU HỎI","05 QUESTIONS","문제 05개"],
+ ["Thành tích của tất cả người chơi trên cùng hệ thống Firebase.","All player results are shared through Firebase.","모든 플레이어의 성적이 Firebase에서 공유됩니다."],
+ ["Đang tải những nhà vô địch…","Loading champions…","우승자 불러오는 중…"],
+ ["Đang kết nối bảng xếp hạng…","Connecting to the leaderboard…","순위표에 연결하는 중…"],
+ ["Đang tải bảng xếp hạng trực tuyến…","Loading live leaderboard…","실시간 순위표 불러오는 중…"],
+ ["Đang đồng bộ thành tích…","Syncing scores…","점수 동기화 중…"],
+ ["Chưa có thành tích nào. Hãy trở thành người đầu tiên ghi danh!","No scores yet. Be the first on the board!","아직 기록이 없어요. 첫 번째 주인공이 되어 보세요!"],
+ ["Bảng thành tích đang chờ các nhà vô địch đầu tiên.","Waiting for our first champions.","첫 번째 우승자를 기다리고 있습니다."],
+ ["Không thể tải thành tích lúc này.","Unable to load scores right now.","현재 점수를 불러올 수 없습니다."],
+ ["Bảng xếp hạng được cập nhật trực tiếp giữa các thiết bị.","The leaderboard updates live across devices.","모든 기기에서 순위표가 실시간으로 갱신됩니다."],
+ ["Đang kết nối cơ sở dữ liệu…","Connecting to the database…","데이터베이스에 연결하는 중…"],
+ ["Không thể tạo hồ sơ người chơi.","Unable to create player profile.","플레이어 프로필을 만들 수 없습니다."],
+ ["Tên phải có 2–32 ký tự (chữ, số, dấu cách, _, -, .).","Name must be 2–32 characters (letters, numbers, spaces, _, -, .).","이름은 2~32자여야 합니다(문자, 숫자, 공백, _, -, .)."],
+ ["Chưa đăng nhập nên không thể lưu điểm.","Sign in to save your score.","점수를 저장하려면 로그인하세요."],
+ ["Đang đồng bộ kết quả…","Syncing results…","결과 동기화 중…"],
+ ["Đăng nhập để xem bảng xếp hạng.","Sign in to view the leaderboard.","순위표를 보려면 로그인하세요."],
+ ["Đang chờ cấu hình Firebase.","Waiting for Firebase setup.","Firebase 설정 대기 중입니다."],
+ ["Không kết nối được Firebase.","Cannot connect to Firebase.","Firebase에 연결할 수 없습니다."],
+ ["Đang khôi phục phiên chơi…","Restoring your session…","이전 게임 세션을 복원하는 중…"],
+ ["Không tìm thấy hồ sơ. Vui lòng nhập tên để tiếp tục.","Profile not found. Enter your name to continue.","프로필을 찾을 수 없습니다. 계속하려면 이름을 입력하세요."],
+ ["Phiên đã hết hạn. Vui lòng nhập tên để tiếp tục.","Session expired. Enter your name to continue.","세션이 만료되었습니다. 계속하려면 이름을 입력하세요."],
+ ["Thông tin phiên chơi","Player session","플레이어 세션"],
+ ["Đang kết nối hệ thống","Connected to the system","시스템에 연결됨"],
+ ["Làm mới bảng xếp hạng","Refresh leaderboard","순위표 새로고침"],
+ ["Ba vị trí dẫn đầu","Top three players","상위 3명"],
+ ["Khu vực câu hỏi","Question area","문제 영역"],
+ ["Chọn ngôn ngữ","Choose language","언어 선택"],
+ ["Hỏi ý kiến khán giả","Ask the audience","관객에게 물어보기"],
+ ["Trợ giúp 50 50","50:50 lifeline","50:50 도움"],
+ ["Gọi điện thoại cho người thân","Phone a friend","지인에게 전화"],
+ ["Thời gian còn lại","Time remaining","남은 시간"],
+ ["Ai là triệu phú, trang chủ","Who Wants to Be a Millionaire, home","백만장자 퀴즈, 홈"],
+ ["Đóng","Close","닫기"],
+ ["Firebase Authentication chưa được thiết lập. Vào Firebase Console → Security → Authentication → Get started (nếu có) → Sign-in method → Anonymous → Enable → Save.","Firebase Authentication is not configured. In Firebase Console: Security → Authentication → Sign-in method → Anonymous → Enable → Save.","Firebase 인증이 설정되지 않았습니다. Firebase Console → Authentication → Sign-in method → Anonymous를 활성화하고 저장하세요."],
+ ["Tên miền chưa được cho phép. Vào Firebase Authentication → Settings → Authorized domains để thêm tên miền đang sử dụng.","This domain is not authorized. Add it under Firebase Authentication → Settings → Authorized domains.","도메인이 허용되지 않았습니다. Firebase Authentication → Settings → Authorized domains에 추가하세요."],
+ ["HALL OF FAME","HALL OF FAME","명예의 전당"]
 ];
 const byVi = new Map(phrases.map(p => [p[0],p]));
 const byAny = new Map();
@@ -93,10 +153,28 @@ let lang = 'vi';
 function translateText(value) {
   const trimmed = value.trim();
   if (!trimmed) return value;
+  const idx = lang === 'en' ? 1 : lang === 'ko' ? 2 : 0;
+  const dynamic = [
+    [/^(\d+) \/ 5 (?:điểm|points|점)$/, m => idx===1 ? m[1]+' / 5 points' : idx===2 ? m[1]+' / 5점' : m[0]],
+    [/^(\d+) (?:giây|seconds)$/, m => idx===1 ? m[1]+' seconds' : idx===2 ? m[1]+'초' : m[0]],
+    [/^(\d+)초$/, m => idx===1 ? m[1]+' seconds' : idx===0 ? m[1]+' giây' : m[0]],
+    [/^(\d+)\/5$/, m => m[0]],
+    [/^✓ Đã lưu (\d+)\/5 điểm lên Firebase\. Bảng xếp hạng đồng bộ tự động\.$/,m => idx===1 ? '✓ Saved '+m[1]+'/5 points to Firebase. Rankings sync automatically.' : idx===2 ? '✓ '+m[1]+'/5점이 Firebase에 저장되었습니다. 순위표가 자동으로 동기화됩니다.' : m[0]],
+    [/^Không tải được bảng xếp hạng: (.+)$/,m => idx===1?'Unable to load leaderboard: '+m[1]:idx===2?'순위표를 불러올 수 없습니다: '+m[1]:m[0]],
+    [/^Không thể đăng nhập: (.+)$/,m => idx===1?'Sign-in failed: '+m[1]:idx===2?'로그인 실패: '+m[1]:m[0]],
+    [/^Không khôi phục được phiên: (.+)$/,m => idx===1?'Could not restore session: '+m[1]:idx===2?'세션 복원 실패: '+m[1]:m[0]],
+    [/^⚠ Không lưu được điểm: (.+)$/,m => idx===1?'⚠ Could not save score: '+m[1]:idx===2?'⚠ 점수를 저장할 수 없습니다: '+m[1]:m[0]],
+    [/^Không tải được Firebase SDK: (.+)$/,m => idx===1?'Could not load Firebase SDK: '+m[1]:idx===2?'Firebase SDK 로드 실패: '+m[1]:m[0]],
+    [/^Chưa cấu hình Firebase \((.+)\)\. Xem README-DEPLOY\.md để kết nối cơ sở dữ liệu\.$/,m => idx===1?'Firebase not configured ('+m[1]+'). See README-DEPLOY.md.':idx===2?'Firebase 설정 누락 ('+m[1]+'). README-DEPLOY.md를 참고하세요.':m[0]]
+  ];
+  for (const [re,fn] of dynamic) {
+    const match=trimmed.match(re);
+    if (match) return value.replace(trimmed,fn(match));
+  }
   const exact = byAny.get(trimmed);
   if (exact) return value.replace(trimmed,exact[lang==='en'?1:lang==='ko'?2:0]);
   let m;
-  const idx = lang === 'en' ? 1 : lang === 'ko' ? 2 : 0;
+
   const patterns = [
     [/^CÂU HỎI (\d+) \/ (\d+)$/, (_,a,b)=>[_,`QUESTION ${a} / ${b}`,`문제 ${a} / ${b}`][idx]],
     [/^CÂU (\d+) · (.+)$/, (_,n,t)=>idx===1?`QUESTION ${n} · ${t}`:idx===2?`문제 ${n} · ${t}`:_],
@@ -114,6 +192,7 @@ function translateText(value) {
 function walk(node) {
   if (node.nodeType===3) {
     if (!node.parentElement || ['SCRIPT','STYLE','OPTION'].includes(node.parentElement.tagName)) return;
+    if(node.parentElement.closest('#playerName, #leaderboardRows .ranking-row strong, #rankingPodium .ranking-podium-name, #loginName'))return;
     const value=translateText(node.nodeValue);
     if(value!==node.nodeValue) node.nodeValue=value;
   } else if(node.nodeType===1) {
@@ -153,6 +232,12 @@ function redraw() {
  localizedFeedback();
  document.title=lang==='en'?'Who Wants to Be a Millionaire — Take the Hot Seat':lang==='ko'?'백만장자 퀴즈 — 도전의 자리':'Ai là triệu phú — Ghế nóng đang chờ';
  document.documentElement.lang=lang;
+ document.querySelectorAll('[data-i18n-placeholder]').forEach(input => {
+   input.placeholder = translateText(input.getAttribute('data-i18n-placeholder'));
+ });
+ document.querySelectorAll('[data-i18n-aria]').forEach(element => {
+   element.setAttribute('aria-label',translateText(element.getAttribute('data-i18n-aria')));
+ });
  walk(document.body);
  const labels={vi:'Tiếng Việt',en:'English',ko:'한국어'};
  const currentName=document.getElementById('languageCurrentName');

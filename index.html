@@ -30,17 +30,17 @@
     <a class="brand" href="./index.html" aria-label="Ai là triệu phú, trang chủ"><span class="brand-mark">✦</span><span>AI LÀ TRIỆU PHÚ<small>THE MILLIONAIRE EXPERIENCE</small></span></a>
     <div class="header-actions"><span class="live"><i></i> SÂN KHẤU TRỰC TIẾP</span><div class="language-picker" id="languagePicker"><button class="language-trigger" id="languageToggle" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="languageMenu" aria-label="Chọn ngôn ngữ"><span class="language-icon"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3.8 6 3.8 9S15 18 12 21M12 3C9 6 8.2 9 8.2 12S9 18 12 21"/></svg></span><span class="language-trigger-copy"><span class="language-current"><strong id="languageCurrentName">Tiếng Việt</strong></span></span><svg class="language-arrow" viewBox="0 0 20 20" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m5 7 5 5 5-5"/></svg></button><div class="language-menu" id="languageMenu" role="menu" aria-label="Chọn ngôn ngữ" hidden><div class="language-menu-title"><span>CHỌN NGÔN NGỮ</span><span class="language-menu-star" aria-hidden="true">✦</span></div><div class="language-menu-options"><button class="language-option is-selected" type="button" data-lang="vi" role="menuitemradio" aria-checked="true" tabindex="-1"><span class="language-option-copy"><strong>Tiếng Việt</strong></span><svg class="language-option-check" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg></button><button class="language-option" type="button" data-lang="en" role="menuitemradio" aria-checked="false" tabindex="-1"><span class="language-option-copy"><strong>English</strong></span><svg class="language-option-check" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg></button><button class="language-option" type="button" data-lang="ko" role="menuitemradio" aria-checked="false" tabindex="-1"><span class="language-option-copy"><strong>한국어</strong></span><svg class="language-option-check" viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 4 4 8-8"/></svg></button></div></div></div><button class="sound-button" id="soundButton" aria-label="Tắt âm thanh" aria-pressed="true">♫ <span>Âm thanh bật</span></button></div>
   </header>
-  <div id="playerAuth" class="login-overlay"><form id="playerForm" class="login-card"><span class="login-star">✦</span><p class="login-kicker">THE MILLIONAIRE EXPERIENCE</p><h2>CHÀO MỪNG ĐẾN SÂN KHẤU</h2><p>Nhập tên để bắt đầu thi đấu và ghi danh trên bảng xếp hạng.</p><label for="loginName">TÊN NGƯỜI CHƠI</label><input id="loginName" name="name" type="text" maxlength="32" minlength="2" autocomplete="nickname" required placeholder="Nhập tên của bạn"><p id="playerStatus" role="status" aria-live="polite"></p><button type="submit">BƯỚC VÀO SÂN KHẤU →</button><small>Chỉ cần nhập tên, không cần mật khẩu. Mỗi trình duyệt có hồ sơ riêng.</small></form></div>
+  <div id="playerAuth" class="login-overlay"><form id="playerForm" class="login-card"><span class="login-star">✦</span><p class="login-kicker">THE MILLIONAIRE EXPERIENCE</p><h2>CHÀO MỪNG ĐẾN SÂN KHẤU</h2><p>Nhập tên để bắt đầu thi đấu và ghi danh trên bảng xếp hạng.</p><label for="loginName">TÊN NGƯỜI CHƠI</label><input id="loginName" data-i18n-placeholder="Nhập tên của bạn" name="name" type="text" maxlength="32" minlength="2" autocomplete="nickname" required placeholder="Nhập tên của bạn"><p id="playerStatus" role="status" aria-live="polite"></p><button type="submit">BƯỚC VÀO SÂN KHẤU →</button><small>Chỉ cần nhập tên, không cần mật khẩu. Mỗi trình duyệt có hồ sơ riêng.</small></form></div>
 
   <main>
-    <nav class="session-strip" aria-label="Thông tin phiên chơi">
+    <nav class="session-strip" data-i18n-aria="Thông tin phiên chơi" aria-label="Thông tin phiên chơi">
       <div class="session-player">
         <span class="session-avatar" aria-hidden="true">♛</span>
         <div class="session-player-copy">
           <span class="session-caption">NGƯỜI CHƠI HIỆN TẠI</span>
           <strong id="playerName">Chưa đăng nhập</strong>
         </div>
-        <span class="session-online" aria-label="Đang kết nối hệ thống"><span></span> ĐANG THI ĐẤU</span>
+        <span class="session-online" data-i18n-aria="Đang kết nối hệ thống" aria-label="Đang kết nối hệ thống"><span></span> ĐANG THI ĐẤU</span>
       </div>
       <div class="session-actions">
         <a class="session-ranking-link" href="#leaderboard"><span aria-hidden="true">🏆</span> Bảng xếp hạng <span aria-hidden="true">↘</span></a>
@@ -77,12 +77,12 @@
           <h2 id="rankingTitle">Bảng xếp hạng <em>vinh danh</em></h2>
           <p>Ghi dấu những người chơi xuất sắc trên hành trình chinh phục ghế nóng.</p>
         </div>
-        <button class="ranking-refresh" id="refreshRanking" type="button" aria-label="Làm mới bảng xếp hạng"><span aria-hidden="true">↻</span> Làm mới</button>
+        <button class="ranking-refresh" id="refreshRanking" type="button" data-i18n-aria="Làm mới bảng xếp hạng" aria-label="Làm mới bảng xếp hạng"><span aria-hidden="true">↻</span> Làm mới</button>
       </div>
       <div class="ranking-board">
         <div class="ranking-podium-area">
           <div class="ranking-area-heading"><span>✦ TOP 3 XUẤT SẮC</span><small>Những ngôi sao dẫn đầu</small></div>
-          <div class="ranking-podium" id="rankingPodium" aria-label="Ba vị trí dẫn đầu">
+          <div class="ranking-podium" id="rankingPodium" data-i18n-aria="Ba vị trí dẫn đầu" aria-label="Ba vị trí dẫn đầu">
             <p class="ranking-wait">Đang tải những nhà vô địch…</p>
           </div>
           <div class="ranking-podium-foot"><span>✦</span> Vinh quang dành cho người kiên trì <span>✦</span></div>
