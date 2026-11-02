@@ -27,10 +27,11 @@ jobs:
         run: |
           node --check script.js
           node --check languages.js
+          node --check account.js
       - name: Prepare website
         run: |
           mkdir -p _site
-          cp index.html style.css cinematic.css script.js languages.js _site/
+          cp index.html style.css cinematic.css account.css script.js languages.js account.js firebase-config.js _site/
           touch _site/.nojekyll
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

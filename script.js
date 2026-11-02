@@ -42,6 +42,7 @@ let phase = 'intro', current = 0, selected = null, seconds = 30, timer = null, r
 let earnedRewards = [], soundEnabled = true, audioContext = null, used = new Set(), expired = new Set(), helpUsedThisQuestion = false, eliminated = [];
 const letters = ['A', 'B', 'C', 'D'];
 let answerOrders = questions.map(() => [0, 1, 2, 3]);
+let gameAnswers = Array(questions.length).fill(null), gameStartedAt = 0, resultSaved = false;
 function newAnswerOrders() {
   answerOrders = questions.map((_, questionIndex) => {
     const previous = answerOrders[questionIndex];
@@ -197,6 +198,7 @@ function claimReward() {
   const reward = rewards[pendingReward];
   $('actionButton').disabled = false;
   if (current === questions.length - 1) {
+    saveGameResult();
     phase = 'won'; $('progress').textContent = `HOÀN THÀNH ${questions.length} / ${questions.length}`;
     $('questionNumber').textContent = '✦ CHÚC MỪNG NHÀ VÔ ĐỊCH ✦';
     feedback(`Xuất sắc! Bạn đã chinh phục cả ${questions.length} câu hỏi. Bộ quà của bạn: ${earnedRewards.map(item => `${item.icon} ${item.name}`).join(' + ')}.`, 'success');
@@ -340,6 +342,7 @@ function reveal(timedOut) {
     if (i === q.correct) { button.classList.add('correct'); button.classList.remove('eliminated'); button.querySelector('.answer-icon').textContent = '✓'; }
     if (i === selected && !correct) { button.classList.add('wrong'); button.querySelector('.answer-icon').textContent = '✕'; }
   });
+  gameAnswers[current] = selected === null || timedOut ? null : answerOrders[current][selected];
   updateLifelines(); $('actionButton').disabled = false;
   if (correct) {
     $(`step${current + 1}`).classList.add('done'); $(`step${current + 1}`).querySelector('.step-star').textContent = '✓';
@@ -347,6 +350,7 @@ function reveal(timedOut) {
     feedback(`Chính xác! ${q.explanation} Vòng quay may mắn đang bắt đầu…`, 'success');
     openRewardWheel();
   } else {
+    saveGameResult();
     phase = 'lost'; playSound('wrong'); $('questionNumber').textContent = timedOut ? 'THỜI GIAN ĐÃ KẾT THÚC' : 'HẸN BẠN Ở THỬ THÁCH TIẾP THEO';
     feedback(`${timedOut ? 'Hết giờ!' : 'Rất tiếc, chưa chính xác!'} ${q.explanation} ${earnedRewards.length ? 'Bạn vẫn giữ được phần quà đã nhận!' : 'Hãy thử lại để mở khóa vòng quay quà tặng nhé!'}`, 'error');
     $('actionButton').innerHTML = 'THỬ LẠI <span>↻</span>';
@@ -375,7 +379,13 @@ function launchCinematicWave() {
     layer.appendChild(wave);
   }
 }
+function saveGameResult() {
+  if (resultSaved) return;
+  resultSaved = true;
+  if (typeof TriviaAccount !== 'undefined') TriviaAccount.save(gameAnswers, (Date.now() - gameStartedAt)/1000);
+}
 function resetGame() {
+  gameAnswers = Array(questions.length).fill(null); gameStartedAt = Date.now(); resultSaved = false;
   if ($('championDialog').open) $('championDialog').close();
   document.body.classList.remove('answer-is-locked');
   launchCinematicWave();
