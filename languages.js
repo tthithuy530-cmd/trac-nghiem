@@ -95,6 +95,7 @@ const phrases = [
  ["Chưa đăng nhập","Not signed in","로그인하지 않음"],
  ["ĐANG THI ĐẤU","IN THE GAME","게임 참여 중"],
  ["Bảng xếp hạng","Leaderboard","순위표"],
+ ["Xếp hạng","Rankings","순위"],
  ["Đổi người chơi","Switch player","플레이어 변경"],
  ["ĐỒNG BỘ TRỰC TUYẾN","LIVE SYNC","실시간 동기화"],
  ["Bảng xếp hạng ","Leaderboard ","순위표 "],

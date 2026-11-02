@@ -187,3 +187,92 @@
  .login-overlay{padding:6px}
  .login-card{padding:17px 12px}
 }
+
+/* Compact-first composition, deliberately designed for 240–360 CSS pixels. */
+/* The large stage crest belongs to tablet/desktop; on tiny phones the quiz comes first. */
+.session-ranking-short{display:none}
+@media(max-width:360px){
+ html{font-size:16px;-webkit-text-size-adjust:100%}
+ body{font-family:system-ui,-apple-system,"Segoe UI","Be Vietnam Pro",sans-serif;font-size:13px;line-height:1.48;font-weight:400;letter-spacing:0;font-synthesis:weight}
+ button,input{font-family:inherit}
+ main{padding-inline:10px}
+ .topbar{width:100%;max-width:none;min-height:0;height:auto;display:grid;grid-template-columns:minmax(0,1fr) 40px;grid-template-areas:"brand sound" "language language";gap:8px 8px;padding:10px 12px 9px;border-bottom:1px solid rgba(210,189,146,.16);background:linear-gradient(180deg,rgba(19,22,50,.9),rgba(14,16,44,.25))}
+ .brand{grid-area:brand;width:auto;max-width:100%;min-width:0;gap:7px;align-self:center;font-size:12px;font-weight:750;letter-spacing:.1px;line-height:1.3}
+ .brand-mark{font-size:21px;flex-shrink:0;text-shadow:none;color:#e6c483}
+ .brand small{display:none}
+ .header-actions{display:contents}
+ .live{display:none}
+ .language-picker{grid-area:language;min-width:0;position:relative}
+ .language-trigger{width:100%;min-width:0;min-height:37px;height:37px;border-radius:10px;gap:8px;padding:4px 11px;background:#252743;border:1px solid #68647f65;box-shadow:none}
+ .language-icon{width:25px;height:25px;border-radius:7px;background:#eee2be0c;border-color:#e6bf7725}
+ .language-current strong{font-weight:600;font-size:12px;letter-spacing:0}
+ .language-arrow{margin-left:auto}
+ .language-menu{width:min(220px,calc(100vw - 24px));left:0;right:auto}
+ .sound-button{grid-area:sound;justify-self:end;display:grid;place-items:center;width:40px;min-width:40px;height:40px;min-height:40px;padding:0;border-radius:10px;font-size:21px;line-height:1;font-weight:400;background:#272943;color:#ead3a7;border:1px solid #766b744f;box-shadow:none}
+ .sound-button span{display:none}
+ .session-strip{margin:10px 0 0;padding:10px 10px 9px;display:grid;grid-template-columns:minmax(0,1fr);gap:10px;border-radius:13px;background:linear-gradient(135deg,#20233d,#171b36);border:1px solid rgba(202,181,133,.25);box-shadow:none}
+ .session-player{width:100%;gap:8px}
+ .session-avatar{width:32px;height:32px;border-radius:9px;font-size:18px;background:#e0bc7620;border-color:#e0bc7645}
+ .session-player-copy{gap:0}
+ .session-caption{font-size:9px;font-weight:600;letter-spacing:.4px;color:#b9b8c9;line-height:1.25}
+ .session-player-copy strong{font-size:13px;font-weight:700;color:#fff;max-width:calc(100vw - 95px);line-height:1.5}
+ .session-online{display:none}
+ .session-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;width:100%}
+ .session-ranking-link,.session-switch{min-width:0;min-height:38px;height:38px;padding:5px 7px;gap:6px;border-radius:9px;border:1px solid #777a9b42;background:#2a2d4b;color:#efe5d4;font-size:11px;font-weight:650;letter-spacing:0;line-height:1.2;white-space:nowrap;word-break:normal;overflow-wrap:normal;box-shadow:none}
+ .session-ranking-link{background:#b7975c24;border-color:#c7a56e62;color:#f5d9a1}
+ .session-ranking-long{display:none}
+ .session-ranking-short{display:inline}
+ .session-ranking-link>span:first-child{display:inline;font-size:13px}
+ .session-ranking-link>span:last-child{display:none}
+ .session-switch{font-size:10.5px}
+ .hero{position:relative;padding:15px 2px 15px;margin:0;text-align:left}
+ .hero .eyebrow{display:none}
+ .hero .emblem{display:none}
+ .hero h1{margin:0;font-size:19px;line-height:1.35;letter-spacing:-.5px;font-weight:720;color:#f5f4f9;text-wrap:balance}
+ .hero h1 em{display:block;margin-top:1px;font-style:normal;color:#e7c78f}
+ .hero p{margin:6px 0 0;font-size:11px;line-height:1.45;font-weight:400;color:#aab2c8;letter-spacing:0}
+ .game-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:11px}
+ .game-panel{padding:13px 12px 14px;border-radius:14px;background:linear-gradient(145deg,rgba(31,33,65,.95),rgba(18,22,49,.98));border:1px solid #7778995b;box-shadow:0 8px 22px #06091533}
+ .game-toolbar{display:grid;grid-template-columns:minmax(0,1fr) 43px;grid-template-rows:auto auto;gap:4px 9px;align-items:center}
+ .question-progress{grid-column:1;grid-row:1;max-width:none;font-size:10px;font-weight:650;color:#e6e4f2;line-height:1.3;letter-spacing:.15px;gap:7px}
+ .question-progress .status-dot{flex-shrink:0;width:6px;height:6px}
+ .timer{grid-column:2;grid-row:1 / span 2;width:43px;height:43px;font-size:16px;place-self:center}
+ .prize-label{grid-column:1;grid-row:2;text-align:left;font-size:9px;letter-spacing:0;line-height:1.4;color:#999fba}
+ .prize-label strong{display:inline;margin:0 0 0 5px;font-size:10px;max-width:none;font-weight:650;color:#f0d59f}
+ .question-wrap{padding:16px 12px 17px;margin:12px 0;border:1px solid rgba(154,146,195,.42);border-radius:12px;clip-path:none;background:linear-gradient(125deg,#29284a,#1d2344)}
+ .question-number{font-size:9px;letter-spacing:.6px;margin-bottom:8px;color:#e8c580;font-weight:700}
+ .question-wrap h2{font-size:clamp(16px,5.8vw,19px);font-weight:670;line-height:1.45;letter-spacing:-.3px;min-height:0;display:block;overflow-wrap:break-word}
+ .question-decoration{display:none}
+ .answers{grid-template-columns:minmax(0,1fr);gap:8px}
+ .answer{min-height:51px;padding:10px 12px;gap:10px;border-radius:10px;font-size:13px;font-weight:500;line-height:1.45;background:#1e2545;border-color:#59618075}
+ .answer .letter{font-size:12px;font-weight:800;color:#f2d49a}
+ .feedback{padding:8px 0;margin-top:2px;min-height:43px;font-size:11px;line-height:1.5;color:#b3bbd0}
+ .action-row{padding-top:11px;gap:8px}
+ .action-row .primary-button{width:100%;max-width:none;min-height:44px;border-radius:10px;font-size:12px;font-weight:750;letter-spacing:.1px;box-shadow:none}
+ .side-panel{gap:10px}
+ .prize-panel,.lifeline-panel{padding:15px 12px;border-radius:12px}
+ .section-heading{font-size:12px;letter-spacing:.15px;font-weight:700}
+ .prize-panel>p,.lifeline-panel>p{font-size:11px}
+ .journey-steps .prize-step{min-height:53px;margin-top:6px;padding:9px 10px;gap:9px;border-radius:9px}
+ .journey-steps .prize-step strong{font-size:11px;font-weight:650}
+ .journey-steps .prize-step small{font-size:9px}
+ .ranking-panel{margin:25px 0 18px;padding:15px 10px}
+ .ranking-heading h2{font-size:23px;line-height:1.25;letter-spacing:-.5px}
+ .ranking-heading p{font-size:11px}
+ .ranking-refresh{min-height:39px;font-size:11px}
+ .ranking-row strong{font-weight:600}
+ .login-card{font-family:system-ui,-apple-system,"Segoe UI","Be Vietnam Pro",sans-serif}
+ .login-card h2{font-size:22px;letter-spacing:-.5px;line-height:1.3}
+ .login-card button{font-family:inherit;font-size:12px;font-weight:750}
+}
+@media(max-width:265px){
+ main{padding-inline:8px}
+ .topbar{padding-inline:9px}
+ .hero h1{font-size:18px}
+ .hero p{font-size:10.5px}
+ .session-ranking-link,.session-switch{font-size:10px;padding-inline:4px}
+ .session-player-copy strong{font-size:12px}
+ .game-panel{padding-inline:10px}
+ .question-wrap{padding-inline:10px}
+ .answer{padding-inline:10px}
+}
