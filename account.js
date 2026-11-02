@@ -28,11 +28,50 @@ const validName = value => value.length >= 2 && value.length <= 32 &&
   /^[\p{L}\p{N} _.\-]+$/u.test(value);
 
 function showRanking(rows, currentUid) {
+  const podium = document.getElementById('rankingPodium');
   rankingRows.replaceChildren();
+  podium.replaceChildren();
+
   if (!rows.length) {
-    rankingRows.textContent = 'Chưa có kết quả. Hãy là người đầu tiên!';
+    const empty = document.createElement('p');
+    empty.className = 'ranking-wait';
+    empty.textContent = 'Chưa có thành tích nào. Hãy trở thành người đầu tiên ghi danh!';
+    podium.append(empty);
+    rankingRows.textContent = 'Bảng thành tích đang chờ các nhà vô địch đầu tiên.';
     return;
   }
+
+  // Podium is displayed silver – gold – bronze, while database ranking remains 1..50.
+  for (const rank of [2, 1, 3]) {
+    const entry = rows[rank - 1];
+    if (!entry) continue;
+    const stand = document.createElement('div');
+    stand.className = 'ranking-stand place-' + rank;
+    if (entry.uid === currentUid) stand.classList.add('is-me');
+    const crown = document.createElement('span');
+    crown.className = 'ranking-crown';
+    crown.textContent = rank === 1 ? '♛' : '✦';
+    crown.setAttribute('aria-hidden', 'true');
+    const medal = document.createElement('span');
+    medal.className = 'ranking-medal';
+    medal.textContent = String(rank).padStart(2, '0');
+    const name = document.createElement('strong');
+    name.className = 'ranking-podium-name';
+    name.textContent = entry.name;
+    name.title = entry.name;
+    const score = document.createElement('span');
+    score.className = 'ranking-podium-score';
+    score.textContent = entry.bestScore + ' / 5 điểm';
+    const duration = document.createElement('small');
+    duration.className = 'ranking-podium-time';
+    duration.textContent = entry.bestDurationSeconds + ' giây';
+    const pedestal = document.createElement('span');
+    pedestal.className = 'ranking-pedestal';
+    pedestal.textContent = String(rank).padStart(2, '0');
+    stand.append(crown, medal, name, score, duration, pedestal);
+    podium.append(stand);
+  }
+
   rows.forEach((entry, index) => {
     const item = document.createElement('div');
     item.className = 'ranking-row' + (entry.uid === currentUid ? ' is-me' : '');
@@ -99,6 +138,7 @@ if (missing.length) {
     const leaderboard = () => {
       if (gameAccount.stopLeaderboard) gameAccount.stopLeaderboard();
       rankingRows.textContent = 'Đang tải bảng xếp hạng trực tuyến…';
+      document.getElementById('rankingPodium').textContent = 'Đang đồng bộ thành tích…';
       const listing = query(collection(db, 'players'), orderBy('rankValue', 'desc'), limit(leaderboardLimit));
       gameAccount.stopLeaderboard = onSnapshot(listing, snapshot => {
         const entries = snapshot.docs.map(item => item.data())
@@ -107,6 +147,7 @@ if (missing.length) {
         showRanking(entries, gameAccount.uid);
       }, error => {
         rankingRows.textContent = 'Không tải được bảng xếp hạng: ' + error.message;
+        document.getElementById('rankingPodium').textContent = 'Không thể tải thành tích lúc này.';
       });
     };
     const enter = player => {
